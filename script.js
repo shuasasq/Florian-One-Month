@@ -11,6 +11,14 @@ surpriseBtn?.addEventListener('click', () => {
   burstHearts(12);
 });
 
+document.querySelectorAll('.next-btn[data-next]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const target = document.getElementById(btn.dataset.next);
+    target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    burstHearts(8);
+  });
+});
+
 function showCard(index) {
   current = (index + cards.length) % cards.length;
   cards.forEach((card, i) => card.classList.toggle('active', i === current));
@@ -45,6 +53,7 @@ document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
 function burstHearts(amount = 10) {
   const holder = document.querySelector('.floating-hearts');
+  if (!holder) return;
   for (let i = 0; i < amount; i++) {
     const heart = document.createElement('span');
     heart.textContent = Math.random() > .45 ? '♡' : '♥';
