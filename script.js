@@ -14,7 +14,7 @@ surpriseBtn?.addEventListener('click', () => {
 function showCard(index) {
   current = (index + cards.length) % cards.length;
   cards.forEach((card, i) => card.classList.toggle('active', i === current));
-  count.textContent = `${current + 1} / ${cards.length}`;
+  if (count) count.textContent = `${current + 1} / ${cards.length}`;
 }
 
 document.getElementById('nextPhoto')?.addEventListener('click', () => showCard(current + 1));
@@ -25,7 +25,7 @@ const stack = document.getElementById('polaroidStack');
 stack?.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, {passive:true});
 stack?.addEventListener('touchend', e => {
   const dx = e.changedTouches[0].screenX - touchStartX;
-  if (Math.abs(dx) > 45) showCard(current + (dx < 0 ? 1 : -1));
+  if (Math.abs(dx) > 45 && cards.length > 1) showCard(current + (dx < 0 ? 1 : -1));
 }, {passive:true});
 
 letterBtn?.addEventListener('click', () => {
