@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f0b18" />
+  <meta name="description" content="A tiny one-month surprise for Florian." />
+  <title>For Florian ❤️</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="floating-hearts" aria-hidden="true"></div>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-photo" aria-hidden="true"></div>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">19 JUL · 19 AUG 2026</p>
+        <h1>Hi, Florian <span>❤️</span></h1>
+        <p class="hero-copy">From your birthday to our first month.</p>
+        <button class="primary-btn" id="openSurprise">Open your surprise</button>
+      </div>
+      <div class="scroll-note">made with love by Santi</div>
+    </section>
+
+    <section class="section intro" id="intro">
+      <div class="flag-glow flag-left"></div>
+      <div class="flag-glow flag-right"></div>
+      <div class="content narrow reveal">
+        <p class="eyebrow">ONE MONTH OF US</p>
+        <h2>One Filipina. One Peruvian.<br><em>Same little world.</em></h2>
+        <p>
+          Different countries, different cultures, a ridiculous distance… and somehow,
+          we still found each other.
+        </p>
+        <div class="countries" aria-label="Peru and Philippines">
+          <div class="country-card"><span class="flag">🇵🇪</span><b>Peru</b><small>Santi</small></div>
+          <div class="heart-line"><span></span><b>♡</b><span></span></div>
+          <div class="country-card"><span class="flag">🇵🇭</span><b>Philippines</b><small>Florian</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section memories" id="memories">
+      <div class="content reveal">
+        <p class="eyebrow">A FEW OF MY FAVORITE THINGS</p>
+        <h2>Us, lately.</h2>
+        <p class="section-copy">A tiny collection of moments I already want to keep forever.</p>
+
+        <div class="polaroid-stack" id="polaroidStack">
+          <figure class="polaroid active"><img src="assets/photo-1.webp" alt="A memory together"><figcaption>from the beginning ♡</figcaption></figure>
+          <figure class="polaroid"><img src="assets/photo-2.webp" alt="A memory together"><figcaption>you + me</figcaption></figure>
+          <figure class="polaroid"><img src="assets/photo-3.webp" alt="A memory together"><figcaption>my favorite kind of chaos</figcaption></figure>
+          <figure class="polaroid"><img src="assets/photo-4.webp" alt="A memory together"><figcaption>one for the archives</figcaption></figure>
+          <figure class="polaroid"><img src="assets/photo-5.webp" alt="A memory together"><figcaption>still makes me smile</figcaption></figure>
+          <figure class="polaroid"><img src="assets/photo-6.webp" alt="A memory together"><figcaption>us being us</figcaption></figure>
+          <figure class="polaroid"><img src="assets/photo-7.webp" alt="A memory together"><figcaption>more of this, please</figcaption></figure>
+        </div>
+
+        <div class="gallery-controls">
+          <button class="icon-btn" id="prevPhoto" aria-label="Previous photo">←</button>
+          <span id="photoCount">1 / 7</span>
+          <button class="icon-btn" id="nextPhoto" aria-label="Next photo">→</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section video-section" id="clip">
+      <div class="content reveal">
+        <p class="eyebrow">7 SECONDS I WANTED TO KEEP</p>
+        <h2>A little moving memory.</h2>
+        <div class="video-frame">
+          <video controls playsinline preload="metadata" poster="assets/photo-2.webp">
+            <source src="assets/memory.mp4" type="video/mp4" />
+          </video>
+          <div class="video-caption">No fancy caption. I just like us here.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section tiny-things" id="tiny-things">
+      <div class="content narrow reveal">
+        <p class="eyebrow">30 DAYS LATER</p>
+        <h2>The little things became <em>our things.</em></h2>
+        <div class="notes-grid">
+          <article><span>01</span><p>Your birthday became our beginning.</p></article>
+          <article><span>02</span><p>Two countries somehow started feeling a little closer.</p></article>
+          <article><span>03</span><p>Ordinary moments started becoming memories I care about.</p></article>
+          <article><span>04</span><p>And now I get to say: happy first month, Florian.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section bridge" id="bridge">
+      <div class="map-line" aria-hidden="true">
+        <span class="pin peru">🇵🇪</span>
+        <svg viewBox="0 0 500 150" preserveAspectRatio="none">
+          <path d="M25,115 C130,15 350,145 475,35" pathLength="1"></path>
+        </svg>
+        <span class="plane">✈</span>
+        <span class="pin ph">🇵🇭</span>
+      </div>
+      <div class="content narrow reveal">
+        <p class="distance-quote">“Layo man ang Peru ug Pilipinas…<br>pero nagkita gihapon ta.”</p>
+        <p class="translation">Peru may be far from the Philippines, but somehow we still found each other.</p>
+      </div>
+    </section>
+
+    <section class="section letter-section" id="letter">
+      <div class="letter-backdrop" aria-hidden="true"></div>
+      <div class="content narrow reveal">
+        <p class="eyebrow">ONE LAST THING FOR YOU</p>
+        <h2>This one is just for you. ❤️</h2>
+        <button class="primary-btn soft" id="openLetter">Open my letter</button>
+
+        <article class="letter-card" id="letterCard" aria-hidden="true">
+          <div class="letter-top">Para kang Florian ♡</div>
+          <p><strong>Florian,</strong></p>
+
+          <p>Usa na ka bulan sukad sa imong birthday, ug usa pud ka bulan sukad nagsugod ta. Murag paspas kaayo ang panahon, pero sa sulod lang sa usa ka bulan, daghan na kaayo tag mga handumanan nga gusto nakong balikan pag-usab.</p>
+
+          <p>Salamat sa tanan, sa imong mga pahiyom, sa atong mga katawa, sa atong mga kabuang, ug bisan sa gagmayng mga higayon nga tingali simple ra para sa uban, pero espesyal kaayo para nako.</p>
+
+          <p>Layo man ang Peru ug Pilipinas, lahi man ta ug kultura ug lugar nga gigikanan, pero nagkita gihapon ta, ug malipayon kaayo ko nga nahitabo ni.</p>
+
+          <p>Gusto lang ko nga mahibaw-an nimo nga espesyal kaayo ka para nako. Gimingaw ko nimo, ug excited kaayo ko sa tanan pa natong mga handumanan nga mahimo pa nato uban.</p>
+
+          <p class="letter-highlight">Malipayong unang bulan nato, Florian ❤️</p>
+
+          <p>Unta mao pa lang ni ang una sa daghan pa kaayong mga bulan nga mag-uban ta.</p>
+
+          <p class="signature">Noi Tiago 🇵🇪❤️🇵🇭</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="ending section" id="ending">
+      <div class="ending-photo"></div>
+      <div class="ending-shade"></div>
+      <div class="ending-copy reveal">
+        <span class="mini-heart">♡</span>
+        <h2>1 month down.</h2>
+        <p>And I still choose us.</p>
+        <div class="date-pill">19.07.2026 · 19.08.2026</div>
+        <small>Santi × Florian</small>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
