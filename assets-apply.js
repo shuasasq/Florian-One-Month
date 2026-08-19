@@ -1,4 +1,10 @@
-const pics = window.FLORIAN_IMAGES || [];
+const pics = [
+  "assets/photo-1.jpg",
+  "assets/photo-2.jpg",
+  "assets/photo-3.jpg",
+  "assets/photo-4.jpg"
+];
+
 const galleryImages = [...document.querySelectorAll('.polaroid img')];
 galleryImages.forEach((img, index) => {
   if (pics[index]) img.src = pics[index];
