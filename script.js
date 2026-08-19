@@ -2,6 +2,7 @@ const surpriseBtn = document.getElementById('openSurprise');
 const intro = document.getElementById('intro');
 const letterBtn = document.getElementById('openLetter');
 const letterCard = document.getElementById('letterCard');
+const letterNext = document.querySelector('.letter-next');
 const cards = [...document.querySelectorAll('.polaroid')];
 const count = document.getElementById('photoCount');
 let current = 0;
@@ -40,6 +41,7 @@ letterBtn?.addEventListener('click', () => {
   letterCard.classList.add('open');
   letterCard.setAttribute('aria-hidden', 'false');
   letterBtn.style.display = 'none';
+  if (letterNext) letterNext.style.display = 'block';
   setTimeout(() => letterCard.scrollIntoView({ behavior: 'smooth', block: 'center' }), 160);
   burstHearts(18);
 });
