@@ -1,0 +1,42 @@
+"use strict";
+const memories=[
+["beso","Un besito que lo dice todo ♡","us","wide",-2],["rooftop","Dos personas, mil vistas","adventures","tall",3],
+["bostezo","Mi momento más elegante…","silly","normal",-4],["puente","Caminar a tu lado","adventures","wide",2],
+["descansando","Los ratitos tranquilos","us","normal",-2],["naturaleza","Nuestra pequeña aventura","adventures","tall",2],
+["restaurante","Tú, yo y nuestras caras","us","tall",-1],["naranja","La mejor sonrisa","little","normal",4],
+["estacion","Entre una parada y otra","adventures","wide",-2],["sushi","Una cita con sushi","little","tall",2],
+["jugando-juntos","Nuestro modo cooperativo 🎮","silly","tall",-3],["abrazados","Así de sencillo, así de bonito","us","tall",2],
+["psg","Nuestra Champions de fantasía","silly","tall",-3],["selfie-ciudad","Una foto más para guardar","adventures","wide",2],
+["comida-casera","Hasta las fotos de comida","little","normal",-3],["espejo","Te vi y sonreí","little","tall",4],
+["videollamada","A veces solo una llamada","silly","tall",-2]].map(([id,title,category,shape,rotation])=>({id,title,category,shape,rotation}));
+const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
+const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let filter="all",shown=[...memories],slideIndex=0,favorites=new Set(),lastFocus=null;
+try{favorites=new Set(JSON.parse(localStorage.getItem("florian-three-months-favorites")||"[]"))}catch(e){}
+function save(){try{localStorage.setItem("florian-three-months-favorites",JSON.stringify([...favorites]))}catch(e){}}
+function render(){
+ const grid=$("#photoGrid"); if(!grid)return;
+ shown=memories.filter(m=>filter==="all"||(filter==="favorites"?favorites.has(m.id):m.category===filter));
+ $("#galleryStatus").textContent=shown.length+" recuerdos · "+favorites.size+" favoritas guardadas ♡";
+ grid.innerHTML=shown.length?shown.map((m,i)=>'<article class="photo-card photo-card--'+m.shape+'" style="--rot:'+m.rotation+'deg;--tape-rot:'+(i%2?4:-4)+'deg"><button class="photo-open" type="button" data-photo-open="'+m.id+'" aria-label="Ampliar recuerdo"><img loading="lazy" decoding="async" src="assets/'+m.id+'.webp" alt="'+m.title+'"><span class="photo-caption">'+m.title+'</span></button><button class="photo-like '+(favorites.has(m.id)?'is-favorite':'')+'" type="button" data-favorite="'+m.id+'" aria-pressed="'+favorites.has(m.id)+'">'+(favorites.has(m.id)?'♥':'♡')+'</button></article>').join(""):'<div class="photo-empty"><span>♡</span><strong>Todavía no hay favoritas.</strong><p>Vuelve a «Todas» y guarda tus recuerdos favoritos.</p></div>';
+ $$("[data-photo-open]",grid).forEach(b=>b.addEventListener("click",()=>openBox(b.dataset.photoOpen)));
+ $$("[data-favorite]",grid).forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.favorite;favorites.has(id)?favorites.delete(id):favorites.add(id);save();render()}));
+}
+$$(".filter-chip").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filter;$$(".filter-chip").forEach(t=>{t.classList.toggle("active",b===t);t.setAttribute("aria-pressed",String(b===t))});render()}));render();
+function updateBox(){const m=shown[slideIndex];$("#lightboxImage").src="assets/"+m.id+".webp";$("#lightboxImage").alt=m.title;$("#lightboxCaption").textContent=m.title;$("#lightboxCount").textContent=(slideIndex+1)+" / "+shown.length}
+function openBox(id){const ix=shown.findIndex(m=>m.id===id);if(ix<0)return;lastFocus=document.activeElement;slideIndex=ix;updateBox();$("#lightbox").classList.add("is-open");$("#lightbox").setAttribute("aria-hidden","false");document.body.classList.add("modal-open");$("#closeLightbox").focus()}
+function moveBox(d){if(!$("#lightbox").classList.contains("is-open"))return;slideIndex=(slideIndex+d+shown.length)%shown.length;updateBox()}
+function closeBox(){$("#lightbox").classList.remove("is-open");$("#lightbox").setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");lastFocus?.focus()}
+$("#closeLightbox")?.addEventListener("click",closeBox);$("#lightboxBackdrop")?.addEventListener("click",closeBox);$("#lightboxPrev")?.addEventListener("click",()=>moveBox(-1));$("#lightboxNext")?.addEventListener("click",()=>moveBox(1));
+document.addEventListener("keydown",e=>{if(!$("#lightbox").classList.contains("is-open"))return;if(e.key==="Escape")closeBox();if(e.key==="ArrowLeft")moveBox(-1);if(e.key==="ArrowRight")moveBox(1)});
+let touchX=0;$("#lightboxImage")?.addEventListener("touchstart",e=>touchX=e.changedTouches[0].screenX,{passive:true});$("#lightboxImage")?.addEventListener("touchend",e=>{const d=e.changedTouches[0].screenX-touchX;if(Math.abs(d)>45)moveBox(d>0?-1:1)},{passive:true});
+$$(".reason-card").forEach(c=>c.addEventListener("click",()=>{const v=!c.classList.contains("is-open");c.classList.toggle("is-open",v);c.setAttribute("aria-expanded",String(v))}));
+const opened=new Set();$$(".wish-card").forEach(c=>c.addEventListener("click",()=>{opened.add(c.dataset.wish);c.classList.add("is-open");c.setAttribute("aria-expanded","true");$("#wishesCounter").textContent=opened.size+" de 3 abiertos";$("#wishesBar").style.width=(opened.size/3*100)+"%";if(opened.size===3){$("#bonusMessage").classList.add("is-visible");burst(20)}}));
+$("#openLetter")?.addEventListener("click",()=>{if($("#letterPaper").classList.contains("open"))return;$("#envelopeScene").classList.add("is-open");$("#openLetter").setAttribute("aria-expanded","true");$("#envelopeHint").textContent="Con amor, para ti ♡";$("#letterPaper").classList.add("open");$("#letterPaper").setAttribute("aria-hidden","false");burst(26);setTimeout(()=>$("#letterPaper").scrollIntoView({behavior:reduced?"auto":"smooth"}),280)});
+const start=Date.UTC(2026,6,19),today=new Date(),date=Date.UTC(today.getFullYear(),today.getMonth(),today.getDate());$("#daysTogether").textContent=String(Math.max(0,Math.floor((date-start)/86400000)));
+function burst(n=12){if(reduced)return;const layer=$("#heartsLayer");for(let i=0;i<Math.min(n,32);i++){const h=document.createElement("span");h.className="heart-particle";h.textContent=i%4===0?"♥":"♡";h.style.setProperty("--left",(12+Math.random()*76)+"%");h.style.setProperty("--size",(22+Math.random()*33)+"px");h.style.setProperty("--duration",(3+Math.random()*2.4)+"s");h.style.setProperty("--delay",(Math.random()*.6)+"s");h.style.setProperty("--drift",(-65+Math.random()*130)+"px");layer.appendChild(h);setTimeout(()=>h.remove(),6500)}}
+$("#startStory")?.addEventListener("click",()=>{burst(14);$("#historia").scrollIntoView({behavior:reduced?"auto":"smooth"})});
+$("#replayStory")?.addEventListener("click",()=>{burst(17);$("#inicio").scrollIntoView({behavior:reduced?"auto":"smooth"})});
+const reveals=$$(".reveal");if("IntersectionObserver"in window){const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");obs.unobserve(e.target)}}),{threshold:.07,rootMargin:"0px 0px -25px 0px"});reveals.forEach(x=>obs.observe(x))}else reveals.forEach(x=>x.classList.add("visible"));
+function progress(){const doc=document.documentElement;$("#readingProgress").style.width=Math.min(100,Math.max(0,scrollY/Math.max(1,doc.scrollHeight-innerHeight)*100))+"%"}
+window.addEventListener("scroll",()=>requestAnimationFrame(progress),{passive:true});window.addEventListener("resize",progress,{passive:true});progress();
