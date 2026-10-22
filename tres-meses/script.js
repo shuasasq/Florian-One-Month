@@ -11,6 +11,7 @@ const memories=[
 ["videollamada","A veces solo una llamada","silly","tall",-2]].map(([id,title,category,shape,rotation])=>({id,title,category,shape,rotation}));
 const bilingualCaptions={"beso":["Un besito que lo dice todo ♡","A little kiss that says everything ♡"],"rooftop":["Dos personas, mil vistas","Two people, a thousand views"],"bostezo":["Mi momento más elegante…","My most elegant moment…"],"puente":["Caminar a tu lado","Walking by your side"],"descansando":["Los ratitos tranquilos","The quiet little moments"],"naturaleza":["Nuestra pequeña aventura","Our little adventure"],"restaurante":["Cuando comimos Sushi Edo","When we ate at Sushi Edo"],"naranja":["La mejor sonrisa","The sweetest smile"],"estacion":["Entre una parada y otra","Between one stop and another"],"sushi":["Carajo, otra foto de Sushi Edo porque es demasiado rico","Damn, another Sushi Edo photo because it’s just too good"],"jugando-juntos":["Nuestro modo cooperativo 🎮","Our co-op mode 🎮"],"abrazados":["Así de sencillo, así de bonito","That simple, that beautiful"],"psg":["Nuestra Champions de fantasía","Our fantasy Champions League"],"selfie-ciudad":["Qué lindo es taparte con mi gorra","It’s so cute seeing you wear my cap"],"comida-casera":["Hasta las fotos de comida","Even the food pictures"],"espejo":["Qué lindo es que puedas sonreír y estar seria a la vez","It’s so cute how you can smile and look serious at the same time"],"videollamada":["A veces solo una llamada","Sometimes just a call"]};
 memories.forEach(m=>{const words=bilingualCaptions[m.id];if(words){m.title=words[0];m.titleEn=words[1];}});
+const revealedSurprises=new Set();
 const $=(s,p=document)=>p.querySelector(s), $$=(s,p=document)=>Array.from(p.querySelectorAll(s));
 const reduced=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 let filter="all",shown=[...memories],slideIndex=0,favorites=new Set(),lastFocus=null;
@@ -20,14 +21,30 @@ function render(){
  const grid=$("#photoGrid"); if(!grid)return;
  shown=memories.filter(m=>filter==="all"||(filter==="favorites"?favorites.has(m.id):m.category===filter));
  $("#galleryStatus").innerHTML=shown.length+" recuerdos · "+favorites.size+" favoritas guardadas ♡<span class=\"gallery-status-en bilingual-en\" lang=\"en\">"+shown.length+" memories · "+favorites.size+" saved favorites ♡</span>";
- grid.innerHTML=shown.length?shown.map((m,i)=>'<article class="photo-card photo-card--'+m.shape+'" style="--rot:'+m.rotation+'deg;--tape-rot:'+(i%2?4:-4)+'deg"><button class="photo-open" type="button" data-photo-open="'+m.id+'" aria-label="Ampliar recuerdo"><img loading="lazy" decoding="async" src="assets/'+m.id+'.webp" alt="'+m.title+'"><span class="photo-caption"><span class="caption-es">'+m.title+'</span><span class="caption-en bilingual-en" lang="en">'+m.titleEn+'</span></span></button><button class="photo-like '+(favorites.has(m.id)?'is-favorite':'')+'" type="button" data-favorite="'+m.id+'" aria-pressed="'+favorites.has(m.id)+'">'+(favorites.has(m.id)?'♥':'♡')+'</button></article>').join(""):'<div class="photo-empty"><span>♡</span><strong>Todavía no hay favoritas.<span class="bilingual-en" lang="en">No favorites yet.</span></strong><p>Vuelve a «Todas» y guarda tus recuerdos favoritos.<span class="bilingual-en" lang="en">Go back to “All” and save your favorite memories.</span></p></div>';
- $$("[data-photo-open]",grid).forEach(b=>b.addEventListener("click",()=>openBox(b.dataset.photoOpen)));
+ grid.innerHTML=shown.length?shown.map((m,i)=>{
+   const hidden=m.id==="bostezo"&&!revealedSurprises.has(m.id);
+   const photo=hidden
+    ? '<span class="surprise-cover"><span class="surprise-emoji" aria-hidden="true">🎁</span><span class="surprise-title">Una foto secreta 🤭</span><span class="surprise-english" lang="en">A secret photo 🤭</span><span class="surprise-hint">Toca para revelar ♡</span><span class="surprise-english" lang="en">Tap to reveal ♡</span></span>'
+    : '<img loading="lazy" decoding="async" src="assets/'+m.id+'.webp" alt="'+m.title+'">';
+   const caption=hidden?'<span class="caption-es">Una pequeña sorpresa ♡</span><span class="caption-en bilingual-en" lang="en">A little surprise ♡</span>':'<span class="caption-es">'+m.title+'</span><span class="caption-en bilingual-en" lang="en">'+m.titleEn+'</span>';
+   return '<article class="photo-card photo-card--'+m.shape+'" style="--rot:'+m.rotation+'deg;--tape-rot:'+(i%2?4:-4)+'deg"><button class="photo-open'+(hidden?' is-surprise':'')+'" type="button" data-photo-open="'+m.id+'" aria-label="'+(hidden?'Revelar foto sorpresa':'Ampliar recuerdo')+'">'+photo+'<span class="photo-caption">'+caption+'</span></button><button class="photo-like '+(favorites.has(m.id)?'is-favorite':'')+'" type="button" data-favorite="'+m.id+'" aria-pressed="'+favorites.has(m.id)+'">'+(favorites.has(m.id)?'♥':'♡')+'</button></article>';
+ }).join(""):'<div class="photo-empty"><span>♡</span><strong>Todavía no hay favoritas.<span class="bilingual-en" lang="en">No favorites yet.</span></strong><p>Vuelve a «Todas» y guarda tus recuerdos favoritos.<span class="bilingual-en" lang="en">Go back to “All” and save your favorite memories.</span></p></div>';
+ $$("[data-photo-open]",grid).forEach(b=>b.addEventListener("click",()=>{
+   const id=b.dataset.photoOpen;
+   if(id==="bostezo"&&!revealedSurprises.has(id)){
+     revealedSurprises.add(id);
+     render();
+     grid.querySelector('[data-photo-open="bostezo"]')?.focus();
+     return;
+   }
+   openBox(id);
+ }));
  $$("[data-favorite]",grid).forEach(b=>b.addEventListener("click",()=>{const id=b.dataset.favorite;favorites.has(id)?favorites.delete(id):favorites.add(id);save();render()}));
 }
 $$(".filter-chip").forEach(b=>b.addEventListener("click",()=>{filter=b.dataset.filter;$$(".filter-chip").forEach(t=>{t.classList.toggle("active",b===t);t.setAttribute("aria-pressed",String(b===t))});render()}));render();
 function updateBox(){const m=shown[slideIndex];$("#lightboxImage").src="assets/"+m.id+".webp";$("#lightboxImage").alt=m.title;$("#lightboxCaption").innerHTML='<span class="caption-es">'+m.title+'</span><span class="caption-en bilingual-en" lang="en">'+m.titleEn+'</span>';$("#lightboxCount").textContent=(slideIndex+1)+" / "+shown.length}
-function openBox(id){const ix=shown.findIndex(m=>m.id===id);if(ix<0)return;lastFocus=document.activeElement;slideIndex=ix;updateBox();$("#lightbox").classList.add("is-open");$("#lightbox").setAttribute("aria-hidden","false");document.body.classList.add("modal-open");$("#closeLightbox").focus()}
-function moveBox(d){if(!$("#lightbox").classList.contains("is-open"))return;slideIndex=(slideIndex+d+shown.length)%shown.length;updateBox()}
+function openBox(id){if(id==="bostezo"&&!revealedSurprises.has(id))return;const ix=shown.findIndex(m=>m.id===id);if(ix<0)return;lastFocus=document.activeElement;slideIndex=ix;updateBox();$("#lightbox").classList.add("is-open");$("#lightbox").setAttribute("aria-hidden","false");document.body.classList.add("modal-open");$("#closeLightbox").focus()}
+function moveBox(d){if(!$("#lightbox").classList.contains("is-open"))return;let tries=0;do{slideIndex=(slideIndex+d+shown.length)%shown.length;tries++}while(shown[slideIndex].id==="bostezo"&&!revealedSurprises.has("bostezo")&&tries<shown.length);updateBox()}
 function closeBox(){$("#lightbox").classList.remove("is-open");$("#lightbox").setAttribute("aria-hidden","true");document.body.classList.remove("modal-open");lastFocus?.focus()}
 $("#closeLightbox")?.addEventListener("click",closeBox);$("#lightboxBackdrop")?.addEventListener("click",closeBox);$("#lightboxPrev")?.addEventListener("click",()=>moveBox(-1));$("#lightboxNext")?.addEventListener("click",()=>moveBox(1));
 document.addEventListener("keydown",e=>{if(!$("#lightbox").classList.contains("is-open"))return;if(e.key==="Escape")closeBox();if(e.key==="ArrowLeft")moveBox(-1);if(e.key==="ArrowRight")moveBox(1)});
