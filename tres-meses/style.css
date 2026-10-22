@@ -33,3 +33,88 @@
 .letter-paper .letter-signature .letter-en{font-size:.94rem}
 .letter-paper .letter-signature-name{font:2.7rem/1.2 'Caveat',cursive!important;color:#a45676!important;margin-top:10px!important}
 @media(max-width:650px){.letter-paper .letter-pair .letter-es{font-size:.97rem;line-height:1.72}.letter-paper .letter-pair .letter-en{font-size:.855rem;line-height:1.67}.letter-pair{margin-bottom:17px}.letter-paragraph{margin-bottom:22px;padding-bottom:21px}.letter-guide{font-size:.68rem!important}}
+/* Anniversary 3: paired Spanish / English reading styles. */
+.bilingual-en {
+  display:block;
+  margin-top:.28em;
+  font-family:'DM Sans',system-ui,sans-serif;
+  font-size:.75em;
+  line-height:1.52;
+  font-weight:400;
+  font-style:italic;
+  letter-spacing:normal;
+  text-transform:none;
+  opacity:.78;
+}
+.hero-intro-en{color:#f2bfdd;font-size:1rem;margin:13px 0 0;opacity:.94}
+.hero-handwritten .bilingual-en{font-size:.68em;color:#ebc2d9;margin-top:5px}
+.hero-description .bilingual-en{font-size:.89rem;line-height:1.7;color:#e1cde4;margin-top:12px}
+.hero-smallnote .bilingual-en{font-size:.72em}
+.hero-bottom .bilingual-en{font-size:.85em;color:#e3c5d4}
+.site-header .nav-en{font-size:.65em;line-height:1.4;color:#edc6da;opacity:.9}
+.nav-pill .nav-en{color:inherit}
+.button-en{font-size:.68em;margin-top:2px;opacity:.85}
+.button-primary,.button-secondary{flex-wrap:wrap}
+.heading-en{font-style:italic!important;font-size:1rem!important;line-height:1.6!important;max-width:550px;margin:2px auto 18px!important;color:#a58898!important;opacity:1}
+.section-dark .heading-en{color:#efc6da!important}
+.count-strip .bilingual-en{font-size:.85em!important;letter-spacing:normal!important;line-height:1.3!important;color:#947987!important;text-transform:none!important}
+.tiny-label .bilingual-en{font-size:.83em;margin-top:3px}
+.story-copy h3 .text-es,.story-copy h3 .text-en{display:block}
+.story-copy h3 .text-en{font-family:'DM Sans',sans-serif;font-style:italic;letter-spacing:normal;font-size:.3em;line-height:1.6;margin-top:10px;color:#a58a9a}
+.story-copy p .text-es,.story-copy p .text-en{display:block}
+.story-copy p .text-en{font-size:.89em;line-height:1.7;margin-top:10px;font-style:italic;color:#9a8590}
+.filter-chip .chip-en{display:block;font-size:.65rem;line-height:1.35;letter-spacing:normal;text-transform:none;margin-top:2px;font-weight:400}
+.gallery-status .bilingual-en{font-size:.86em}
+.photo-card{grid-row:span 30;padding-bottom:15px}
+.photo-card--tall{grid-row:span 37}
+.photo-card--wide{grid-row:span 34}
+.photo-open .photo-caption{flex:0 0 auto;font-family:'Caveat',cursive;white-space:normal;overflow:visible;max-width:100%;padding:9px 4px 0;line-height:1.15;text-overflow:clip}
+.photo-caption .caption-es{display:block;font-size:1.19rem;color:#4c3540}
+.photo-caption .caption-en{display:block;margin:5px 0 0;font:italic .7rem/1.35 'DM Sans',sans-serif;color:#83727b}
+.lightbox-footer #lightboxCaption .caption-es{display:block;font:1.5rem/1.1 'Caveat',cursive}
+.lightbox-footer #lightboxCaption .caption-en{display:block;font:italic .82rem/1.45 'DM Sans',sans-serif;color:#e1cede;margin-top:5px}
+.photo-empty .bilingual-en{font-size:.8em}
+.album-outro .bilingual-en{font:italic .58em/1.5 'DM Sans',sans-serif}
+.photostrip-content p .bilingual-en{font-size:.38em;color:#f4deec;margin-top:19px}
+.reasons-section .center-heading h2 + .heading-en{margin-top:12px!important}
+.reason-card{height:360px}
+.reason-front>span .bilingual-en{font-size:.36em;line-height:1.4;opacity:.8}
+.reason-front small .bilingual-en{font-size:.88em}
+.reason-back{font-size:clamp(1.3rem,1.9vw,2rem);line-height:1.21;justify-content:center}
+.reason-back .reason-es,.reason-back .reason-en{display:block}
+.reason-back .reason-en{font:italic .82rem/1.5 'DM Sans',sans-serif;color:#775a66;margin-top:13px}
+.reason-back b{font-size:2.6rem;margin-top:5px}
+.reasons-footer .bilingual-en{font-size:.52em}
+.wish-front .bilingual-en{font-size:.7em}
+.wish-message .bilingual-en{font:italic .6em/1.45 'DM Sans',sans-serif;margin-top:10px}
+.wish-card{height:290px}
+.wishes-count .bilingual-en{font-size:.8em}
+.bonus-message strong .bilingual-en{font-size:.5em}
+.bonus-message p .bilingual-en{font-size:.82em}
+.envelope-hint .bilingual-en{font-size:.62em}
+.paper-top .bilingual-en{font-size:.85em}
+.final-content p .bilingual-en{font-size:.84em;color:#e1c9df}
+.site-footer .footer-bilingual{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.site-footer .footer-bilingual .bilingual-en{font-size:.94em;opacity:.75}
+@media (max-width:760px){
+  .photo-card{grid-row:span 32}
+  .photo-card--tall{grid-row:span 40}
+  .photo-card--wide{grid-row:span 38}
+  .photo-caption .caption-es{font-size:1.03rem}
+  .photo-caption .caption-en{font-size:.67rem}
+  .reason-card{height:350px}
+  .reason-back{font-size:1.2rem}
+  .reason-back .reason-en{font-size:.76rem}
+  .wish-card{height:295px}
+  .site-footer .footer-bilingual{align-items:center}
+}
+@media(max-width:420px){
+  .photo-card{grid-row:span 35}
+  .photo-card--tall{grid-row:span 44}
+  .photo-card--wide{grid-row:span 40}
+  .reason-card{height:380px}
+  .reason-back{font-size:1.13rem}
+  .reason-back .reason-en{font-size:.69rem;line-height:1.4}
+  .reason-front>span{font-size:1.45rem}
+  .story-copy h3 .text-en{font-size:.39em}
+}
