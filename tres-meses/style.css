@@ -118,3 +118,12 @@
   .reason-front>span{font-size:1.45rem}
   .story-copy h3 .text-en{font-size:.39em}
 }
+
+/* Three-month surprise: the silly selfie is invisible until the card is tapped. */
+.photo-open.is-surprise{justify-content:space-between}
+.surprise-cover{flex:1;min-height:0;width:100%;background:linear-gradient(155deg,#f7e8ed,#fcefcf);border:2px dashed #d8b3c3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:18px 13px;color:#654657;gap:7px}
+.surprise-emoji{font-size:clamp(2.2rem,5vw,4rem);margin-bottom:10px;line-height:1.2}
+.surprise-title{font:clamp(1.5rem,2.3vw,2.1rem)/1.1 'DM Serif Display',Georgia,serif}
+.surprise-hint{margin-top:14px;font-size:.86rem;font-weight:700;line-height:1.3}
+.surprise-english{font-size:.76rem;font-style:italic;line-height:1.4;color:#927785}
+@media(max-width:760px){.surprise-cover{padding:12px 8px;gap:5px}.surprise-title{font-size:1.4rem}.surprise-emoji{font-size:2.4rem;margin-bottom:4px}.surprise-hint{margin-top:6px;font-size:.75rem}.surprise-english{font-size:.67rem}}
